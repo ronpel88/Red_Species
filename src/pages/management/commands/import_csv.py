@@ -2,15 +2,13 @@
 from django.core.management.base import BaseCommand
 import csv
 from pages.models import Species
-
-
-
+import codecs
 
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
         self.stdout.write("Starting to import data from csv to model")
-        with open("csv/RedSpeciesDataTable.csv") as f:
+        with codecs.open("csv/RedSpeciesDataTable.csv", 'r', 'utf-8', 'ignore') as f:
             r = csv.DictReader(f)
             for d in r:
                 species = Species(seintific_name=d['Scientific_Name'],
