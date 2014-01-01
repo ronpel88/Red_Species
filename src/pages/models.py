@@ -5,7 +5,7 @@ from django.db import models
 class Species(models.Model):
 
     # seintific_name - שם מדעי (VARCHAR)
-    seintific_name = models.CharField(max_length=200)
+    seintific_name = models.CharField(max_length=200, unique=True)
 
     # en_name - שם אנגלי (VARCHAR)
     en_name = models.CharField(max_length=200)
@@ -16,8 +16,8 @@ class Species(models.Model):
     # author - מחבר (VARCHAR)
     author = models.CharField(max_length=200)
 
-    # protection_status - האם מוגן (BOOLEAN)
-    protection_status = models.BooleanField()
+    # protection_status - סוג הגנה (VARCHAR)
+    protection_status = models.CharField(max_length=200)
 
     # eco_system - מערכת אקולוגית (VARCHAR)
     eco_system_text = models.CharField(max_length=200)
@@ -94,6 +94,9 @@ class Species(models.Model):
     def __unicode__(self):
         return self.seintific_name
 
+    def test_name(self):
+        return self.seintific_name == 'Scientific_Name'
+
 class ObsservationTypes(object):
     WI = 4 # escaped to the wild
     LI = 3 # literature site
@@ -136,45 +139,45 @@ class Families(models.Model):
     family_he_name = models.CharField(max_length=100, db_index=True)
     # en_name - שם אנגלי (VARCHAR)
     family_en_name = models.CharField(max_length=100, db_index=True)
-    
+
     def __unicode__(self):
         return self.family_en_name
 
 class Images(models.Model):
-    
+
     # species_id - מפתח זר
     species_id = models.ForeignKey(Species)
-    
+
     # url - כתובת התמונה (URL)
     url = models.URLField()
-    
+
     # photographer - שם הצלם - (VARCHAR)
     photographer = models.CharField(max_length=50, db_index=True)
-    
+
     # ordinal - סדר התמונות
     ordinal = models.IntegerField()
-      
+
     def __unicode(self):
         return self.url
-      
-      
+
+
 class Obs(models.Model):
-    
+
     # species_id - מפתח זר
     species_id = models.ForeignKey(Species)
-    
+
     # obs_x - קו אורך (FLOAT)
     obs_lng = models.FloatField()
-    
+
     # obs_y - קו רוחב (FLOAT)
     obs_lat = models.FloatField()
-    
+
     # obs_date - תאריך תצפית (DATE) null
     obs_date = models.DateField(null=True, blank=True)
-    
+
     # aggregation_num - מספר תצפיות (INT)
     aggregation_num = models.IntegerField()
-    
+
     # obs_type_id - סוג תצפית (INT) - מפתח זר
     obs_type = models.IntegerField() #int replaced by ENUM - check Udi's example
 
