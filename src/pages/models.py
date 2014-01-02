@@ -4,14 +4,20 @@ from django.db import models
 # Create your models here.
 class Species(models.Model):
 
+    # layer_id - קוד לפי שכבת הנתונים ()
+    layer_id = models.IntegerField(unique=True, blank=True, null=True)
+    
     # seintific_name - שם מדעי (VARCHAR)
     seintific_name = models.CharField(max_length=200, unique=True)
 
     # en_name - שם אנגלי (VARCHAR)
-    en_name = models.CharField(max_length=200)
+    en_name = models.CharField(max_length=200, blank=True, null=True)
 
     # he_name - שם עברי (VARCHAR)
     he_name = models.CharField(max_length=200)
+    
+    # he_name_synonym -   שם עברי נרדף (VARCHAR)
+    he_name_synonym = models.CharField(max_length=200, blank=True, null=True)
 
     # author - מחבר (VARCHAR)
     author = models.CharField(max_length=200)
@@ -26,43 +32,43 @@ class Species(models.Model):
     chorotype_text = models.CharField(max_length=200)
 
     # conservation_site - אתר מרכזי לשימור (VARCHAR)
-    conservation_site = models.CharField(max_length=200)
+    conservation_site = models.CharField(max_length=200, blank=True, null=True)
 
     # rarity - נדירות (INT)
-    rarity = models.SmallIntegerField()
+    rarity = models.SmallIntegerField(blank=True, null=True)
 
     # red_number - מספר אדום (INT)
-    red_number = models.SmallIntegerField()
+    red_number = models.SmallIntegerField(blank=True, null=True)
 
     # iucn_category - קטגוריה לפי איגוד עולמי (CHAR)
-    iucn_category = models.CharField(max_length=200)
+    iucn_category = models.CharField(max_length=200, blank=True, null=True)
 
     # vulnerability - פגיעות (INT)
-    vulnerability = models.SmallIntegerField()
+    vulnerability = models.SmallIntegerField(blank=True, null=True)
 
     # attractiveness - אטרקטיביות (INT)
-    attractiveness = models.SmallIntegerField()
+    attractiveness = models.SmallIntegerField(blank=True, null=True)
 
     # endemism - אנדמיזם (INT)
-    endemism = models.SmallIntegerField()
+    endemism = models.SmallIntegerField(blank=True, null=True)
 
     # peripherality -פריפריאליות (BOOLEAN)
-    peripherality = models.SmallIntegerField()
+    peripherality = models.SmallIntegerField(blank=True, null=True)
 
     # disjunctiveness -  צמידות (INT)
-    disjunctiveness = models.SmallIntegerField()
+    disjunctiveness = models.SmallIntegerField(blank=True, null=True)
 
     # number_of_districts - מספר גלילות (INT)
-    number_of_districts = models.SmallIntegerField()
+    number_of_districts = models.SmallIntegerField(blank=True, null=True)
 
     # percentage_of_protected_sites - אחוז האתרים המוגנים (INT)
-    percentage_of_protected_sites = models.IntegerField()
+    percentage_of_protected_sites = models.IntegerField(blank=True, null=True)
 
     # plant_description - תיאור הצמח (TEXT)
     plant_description = models.TextField()
 
     # uses - שימושים (TEXT)
-    uses = models.TextField()
+    uses = models.TextField(blank=True, null=True)
 
     # distribution_in_israel - תפוצה בארץ (TEXT)
     distribution_in_israel = models.TextField()
@@ -71,22 +77,22 @@ class Species(models.Model):
     habitat = models.TextField()
 
     # global_distribution - תפוצה בעולם (TEXT)
-    global_distribution = models.TextField()
+    global_distribution = models.TextField(blank=True, null=True)
 
     # systematics_and_biogeography - סיסטמטיקה וביוגיאוגרפיה (TEXT)
-    systematics_and_biogeography = models.TextField()
+    systematics_and_biogeography = models.TextField(blank=True, null=True)
 
     # nature_conservation - שמירת טבעי (TEXT)
-    nature_conservation = models.TextField()
+    nature_conservation = models.TextField(blank=True, null=True)
 
     # conservation_recomendations - המלצות לממשק ושימור (TEXT)
-    conservation_recomendations = models.TextField()
+    conservation_recomendations = models.TextField(blank=True, null=True)
 
     # discussion_and_conclusions - סיכום ומסקנות (TEXT)
-    discussion_and_conclusions = models.TextField()
+    discussion_and_conclusions = models.TextField(blank=True, null=True)
 
     # literature - ספרות (TEXT)
-    literature = models.TextField()
+    literature = models.TextField(blank=True, null=True)
 
     # family_id - מזהה משפחה (INT) - מפתח זר
     # family_id = models.ForeignKey()
@@ -139,6 +145,9 @@ class Families(models.Model):
     family_he_name = models.CharField(max_length=100, db_index=True)
     # en_name - שם אנגלי (VARCHAR)
     family_en_name = models.CharField(max_length=100, db_index=True)
+    # en_name_synonym - שם אנגלי נרדף (VARCHAR)
+    family_en_synonym = models.CharField(max_length=100, db_index=True, null=True, blank=True)
+
 
     def __unicode__(self):
         return self.family_en_name
