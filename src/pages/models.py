@@ -7,20 +7,32 @@ class Species(models.Model):
     # layer_id - קוד לפי שכבת הנתונים ()
     layer_id = models.IntegerField(unique=True, blank=True, null=True)
     
-    # seintific_name - שם מדעי (VARCHAR)
-    seintific_name = models.CharField(max_length=200, unique=True)
-
-    # en_name - שם אנגלי (VARCHAR)
-    en_name = models.CharField(max_length=200, blank=True, null=True)
+    # scientific_name - שם מדעי (VARCHAR)
+    scientific_name = models.CharField(max_length=200, unique=True)
+	
+    # scientific_name_synonym - שם מדעי נרדף (VARCHAR)
+    scientific_name_synonym = models.CharField(max_length=200, blank=True, null=True)
 
     # he_name - שם עברי (VARCHAR)
     he_name = models.CharField(max_length=200)
-    
+	
     # he_name_synonym -   שם עברי נרדף (VARCHAR)
     he_name_synonym = models.CharField(max_length=200, blank=True, null=True)
 
+    # he_name_punc - שם עברי מנוקד (VARCHAR)
+    he_name_punc = models.CharField(max_length=200, blank=True, null=True)
+
+    # en_name - שם אנגלי (VARCHAR)
+    en_name = models.CharField(max_length=200, blank=True, null=True)
+	
+	# arab_name - שם ערבי (VARCHAR)
+    arab_name = models.CharField(max_length=200, blank=True, null=True)
+
     # author - מחבר (VARCHAR)
     author = models.CharField(max_length=200)
+	
+    # text_participate - משתתף בכתיבה (VARCHAR)
+    text_participate = models.CharField(max_length=200, blank=True, null=True))
 
     # protection_status - סוג הגנה (VARCHAR)
     protection_status = models.CharField(max_length=200)
@@ -37,11 +49,11 @@ class Species(models.Model):
     # rarity - נדירות (INT)
     rarity = models.SmallIntegerField(blank=True, null=True)
 
-    # red_number - מספר אדום (INT)
-    red_number = models.SmallIntegerField(blank=True, null=True)
+    # red_number - מספר אדום (FLOAT)
+    red_number = models.FloatField(blank=True, null=True)
 
     # iucn_category - קטגוריה לפי איגוד עולמי (CHAR)
-    iucn_category = models.CharField(max_length=200, blank=True, null=True)
+    iucn_category = models.CharField(max_length=50, blank=True, null=True)
 
     # vulnerability - פגיעות (INT)
     vulnerability = models.SmallIntegerField(blank=True, null=True)
@@ -52,18 +64,25 @@ class Species(models.Model):
     # endemism - אנדמיזם (INT)
     endemism = models.SmallIntegerField(blank=True, null=True)
 
-    # peripherality -פריפריאליות (BOOLEAN)
-    peripherality = models.SmallIntegerField(blank=True, null=True)
+    # peripherality -פריפריאליות (VARCHAR)
+    peripherality = models.CharField(max_length=50,blank=True, null=True)
 
     # disjunctiveness -  צמידות (INT)
     disjunctiveness = models.SmallIntegerField(blank=True, null=True)
 
+	# past_number_of_districts - מספר גלילות בעבר (INT)
+    past_number_of_districts = models.SmallIntegerField(blank=True, null=True)
+
     # number_of_districts - מספר גלילות (INT)
     number_of_districts = models.SmallIntegerField(blank=True, null=True)
 
-    # percentage_of_protected_sites - אחוז האתרים המוגנים (INT)
-    percentage_of_protected_sites = models.IntegerField(blank=True, null=True)
-
+	
+    # fragmentation - קיטוע (VARCHAR)
+	fragmentation = models.CharField(max_length=50,blank=True, null=True)
+	
+    # percentage_of_protected_sites - אחוז האתרים המוגנים (FLOAT)
+    percentage_of_protected_sites = models.FloatField(blank=True, null=True)
+	
     # plant_description - תיאור הצמח (TEXT)
     plant_description = models.TextField()
 
@@ -94,8 +113,11 @@ class Species(models.Model):
     # literature - ספרות (TEXT)
     literature = models.TextField(blank=True, null=True)
 
-    # family_id - מזהה משפחה (INT) - מפתח זר
-    # family_id = models.ForeignKey()
+	# family_id_num 
+    family_id_num = models.SmallIntegerField(db_index=True)
+	
+    #family_id - מזהה משפחה (INT) - מפתח זר
+    #family_id = models.ForeignKey()
 
     def __unicode__(self):
         return self.seintific_name
@@ -143,10 +165,18 @@ class IUCNLevel(object):
 class Families(models.Model):
     # he_name - שם עברי (VARCHAR)
     family_he_name = models.CharField(max_length=100, db_index=True)
-    # en_name - שם אנגלי (VARCHAR)
-    family_en_name = models.CharField(max_length=100, db_index=True)
-    # en_name_synonym - שם אנגלי נרדף (VARCHAR)
-    family_en_synonym = models.CharField(max_length=100, db_index=True, null=True, blank=True)
+    # he_name_synonym - שם משפחה נרדף (VARCHAR)
+    family_he_synonym = models.CharField(max_length=100, db_index=True, null=True, blank=True))
+
+    # scientific_name - שם מדעי (VARCHAR)
+    family_scientific_name = models.CharField(max_length=100, db_index=True)
+    # scientific_name_synonym - שם מדעי נרדף (VARCHAR)
+    family_scientific_synonym = models.CharField(max_length=100, db_index=True, null=True, blank=True)
+	
+    # מזהה משפחה מספרי מהטבלה
+	family_id_num = models.SmallIntegerField(db_index=True,unique=True)
+
+
 
 
     def __unicode__(self):
